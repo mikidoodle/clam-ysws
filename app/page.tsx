@@ -306,7 +306,6 @@ export default function Home() {
                 flexDirection: "column",
               }}
             >
-              <li>a personal page</li>
               <li>a game</li>
               <li>a chat app</li>
               <li>a file server</li>
