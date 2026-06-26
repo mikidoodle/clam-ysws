@@ -16,7 +16,7 @@ const asciiArray = [
 const asciiText = [
   "stuff",
   "a clam locket (4 hours)",
-  "a raspberry pi (3 hours)",
+  "a raspberry pi zero 2w (3 hours)",
   "a weighted clam plushie (5 hours)",
   "$10 in cloud credits (2 hours)",
 ];
