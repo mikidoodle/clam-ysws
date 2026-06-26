@@ -1,0 +1,203 @@
+.page {
+  --background: #fafafa;
+  --text-primary: #000;
+  --text-secondary: #666;
+
+  min-height: 100vh;
+  padding: 72px 8vw 56px;
+  font-family: var(--font-geist-sans);
+  background-color: var(--background);
+  color: var(--text-primary);
+}
+
+.hero {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+.sshCommand {
+  margin: 0 0 32px;
+  font-family: var(--font-geist-mono);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: pre;
+}
+
+.shellIntro {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.asciiStage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--ascii-columns) * 1ch);
+  height: calc(var(--ascii-lines) * 1em);
+  max-width: 100%;
+  flex: 0 0 auto;
+  font-size: clamp(6px, 0.68vw, 10px);
+  line-height: 1;
+}
+
+.asciiArt {
+  margin: 0;
+  font-family: var(--font-geist-mono);
+  font-size: inherit;
+  line-height: 1;
+  white-space: pre;
+}
+
+.asciiLine {
+  display: block;
+  min-height: 1em;
+  opacity: 0;
+  animation: printAsciiLine 1ms step-end forwards;
+  animation-delay: calc(var(--line-index) * 45ms);
+}
+
+.introText {
+  min-width: 220px;
+}
+
+.introText p {
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+}
+
+.introText h1 {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.asciiButton {
+  margin: 0;
+  font-family: var(--font-geist-mono);
+  white-space: pre;
+  cursor: pointer;
+}
+
+.footer {
+  width: 100vw;
+  margin: 72px calc(50% - 50vw) -56px;
+  overflow: hidden;
+  border-top: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  font-family: var(--font-geist-mono);
+  font-size: clamp(18px, 3vw, 42px);
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.footerTrack {
+  display: flex;
+  width: max-content;
+  animation: rollClam 16s linear infinite;
+}
+
+.footerTrack span {
+  padding: 14px 28px;
+}
+
+@media (max-width: 760px), (max-height: 620px) {
+  .page {
+    padding: 32px 24px 28px;
+  }
+
+  .hero {
+    width: 100%;
+  }
+
+  .title {
+    margin-bottom: 12px;
+  }
+
+  .sshCommand {
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+
+  .shellIntro {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .asciiStage {
+    width: calc(var(--current-ascii-columns) * 1ch);
+    height: calc(var(--current-ascii-lines) * 1em);
+    max-width: 100%;
+    font-size: clamp(5.4px, 1.55vw, 8px);
+    font-size: clamp(
+      4.8px,
+      calc((100vw - 48px) / var(--current-ascii-columns) * 1.7),
+      10px
+    );
+  }
+
+  .introText {
+    width: 100%;
+    text-align: center;
+  }
+
+  .introText h1 {
+    font-size: 28px;
+  }
+
+  .asciiButtonHero {
+    width: fit-content;
+    margin: 24px auto 0;
+    font-size: clamp(20px, 6.5vw, 34px);
+    line-height: 1;
+  }
+
+  .footer {
+    margin-top: 48px;
+    margin-bottom: -28px;
+    font-size: clamp(24px, 9vw, 44px);
+  }
+
+  .footerTrack span {
+    padding: 12px 22px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .page {
+    --background: #000;
+    --text-primary: #ededed;
+    --text-secondary: #999;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .asciiLine {
+    animation: none;
+    opacity: 1;
+  }
+
+  .footerTrack {
+    animation: none;
+  }
+}
+
+@keyframes printAsciiLine {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rollClam {
+  to {
+    transform: translateX(-50%);
+  }
+}
