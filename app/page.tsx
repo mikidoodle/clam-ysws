@@ -212,13 +212,6 @@ export default function Home() {
               ,{" "}
               <Link
                 style={{ color: "#FD7979" }}
-                href="https://github.com/shazow/ssh-chat"
-              >
-                ssh-chat
-              </Link>
-              , and{" "}
-              <Link
-                style={{ color: "#FD7979" }}
                 href="https://github.com/charmbracelet/wish"
               >
                 Wish
