@@ -32,7 +32,7 @@ export default function Home() {
     <div className={styles.page}>
       <div className={styles.hero}>
         
-        <h3 className={styles.sshCommand}>&gt; ssh outer.one -p 6767</h3>
+        <h3 className={styles.sshCommand}>&gt; ssh clam.hackclub.com -p 6767</h3>
         <div className={styles.shellIntro}>
           <div>
           <div
