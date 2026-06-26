@@ -2,6 +2,11 @@
   "name": "clamweb",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "npm@11.6.2",
+  "engines": {
+    "node": ">=22.9.0",
+    "npm": ">=11.0.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
