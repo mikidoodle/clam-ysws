@@ -34,13 +34,22 @@ const asciiStage = asciiArray.reduce(
 
 export default function Home() {
   const [current, setCurrent] = useState(0);
+  const [printedLineCount, setPrintedLineCount] = useState(0);
   const idleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const cycleIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const currentAsciiLines = asciiArray[current].split("\n");
+  const currentAsciiLineCount = currentAsciiLines.length;
+  const printedAscii = currentAsciiLines.slice(0, printedLineCount).join("\n");
+  const isPrinting = printedLineCount < currentAsciiLineCount;
   const currentAsciiStage = {
     columns: Math.max(...currentAsciiLines.map((line) => line.length)),
-    lines: currentAsciiLines.length,
+    lines: currentAsciiLineCount,
   };
+  const advancePrize = useCallback(() => {
+    setPrintedLineCount(0);
+    setCurrent((prev) => (prev + 1) % asciiArray.length);
+  }, []);
+
   const clearPrizeTimers = useCallback(() => {
     if (idleTimeoutRef.current) {
       clearTimeout(idleTimeoutRef.current);
@@ -57,12 +66,10 @@ export default function Home() {
     clearPrizeTimers();
 
     idleTimeoutRef.current = setTimeout(() => {
-      setCurrent((prev) => (prev + 1) % asciiArray.length);
-      cycleIntervalRef.current = setInterval(() => {
-        setCurrent((prev) => (prev + 1) % asciiArray.length);
-      }, 5000);
+      advancePrize();
+      cycleIntervalRef.current = setInterval(advancePrize, 5000);
     }, 10000);
-  }, [clearPrizeTimers]);
+  }, [advancePrize, clearPrizeTimers]);
 
   useEffect(() => {
     resetPrizeCycle();
@@ -70,8 +77,22 @@ export default function Home() {
     return clearPrizeTimers;
   }, [clearPrizeTimers, resetPrizeCycle]);
 
+  useEffect(() => {
+    if (printedLineCount >= currentAsciiLineCount) {
+      return;
+    }
+
+    const printTimeout = setTimeout(() => {
+      setPrintedLineCount((lineCount) =>
+        Math.min(lineCount + 1, currentAsciiLineCount),
+      );
+    }, 38);
+
+    return () => clearTimeout(printTimeout);
+  }, [current, currentAsciiLineCount, printedLineCount]);
+
   const showNextPrize = () => {
-    setCurrent((prev) => (prev + 1) % asciiArray.length);
+    advancePrize();
     resetPrizeCycle();
   };
 
@@ -94,16 +115,9 @@ export default function Home() {
                 } as CSSProperties
               }
             >
-              <pre key={current} className={styles.asciiArt}>
-                {currentAsciiLines.map((line, index) => (
-                  <span
-                    className={styles.asciiLine}
-                    key={`${current}-${index}`}
-                    style={{ "--line-index": index } as CSSProperties}
-                  >
-                    {line}
-                  </span>
-                ))}
+              <pre className={styles.asciiArt}>
+                {printedAscii}
+                {isPrinting ? <span className={styles.cursor}>█</span> : null}
               </pre>
             </div>
           </div>
@@ -132,7 +146,7 @@ export default function Home() {
         </div>
         <div style={{ display: "flex", gap: "2rem", flexDirection: "column" }}>
           <div
-            style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+            style={{ display: "flex", flexDirection: "column", gap: "1rem", fontFamily: "monospace" }}
           >
             <h1>whar</h1>
             <p style={{ fontFamily: "monospace" }}>
@@ -189,6 +203,20 @@ export default function Home() {
             <h1>how do i clam?</h1>
             <p>
               You can write an ssh app using{" "}
+              <Link 
+                style={{ color: "#FD7979" }}
+                href="https://github.com/gliderlabs/ssh"
+              >
+                gliderlabs/ssh
+              </Link>
+              ,{" "}
+              <Link
+                style={{ color: "#FD7979" }}
+                href="https://github.com/shazow/ssh-chat"
+              >
+                ssh-chat
+              </Link>
+              , and{" "}
               <Link
                 style={{ color: "#FD7979" }}
                 href="https://github.com/charmbracelet/wish"
@@ -204,7 +232,28 @@ export default function Home() {
               </Link>
               , or any ssh server library of your choice!
             </p>
-            <p>Some helpful resources for first time clammers are:</p>
+            <p>
+              Here&apos;s a{" "}
+              <Link href="https://github.com/ramonmeza/PythonSSHServerTutorial" style={{
+                color: "#FD7979",
+              }}>
+                guide
+              </Link>{" "}
+              to help you get started with writing one with Paramiko, and <Link href="https://dev.to/jodaut/implementing-a-minimal-ssh-server-in-go-3b2k" style={{
+                color: "#FD7979",
+              }}> another one</Link> for Go with gliderlabs/ssh.
+            </p>
+          </div>
+          <div
+            style={{
+              fontFamily: "monospace",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+            }}
+          >
+            <h1>how do i submit?</h1>
+            <p>For your ssh app to be eligible, it must:</p>
             <ul
               style={{
                 fontFamily: "monospace",
@@ -214,41 +263,29 @@ export default function Home() {
                 flexDirection: "column",
               }}
             >
+              <li>be open source</li>
               <li>
+                be hosted either on{" "}
                 <Link
-                  style={{ color: "#FD7979" }}
-                  href="https://git.coopcloud.tech/decentral1se/ssh-warm-welcome"
+                  style={{
+                    color: "#FD7979",
+                  }}
+                  href="https://hackclub.app/"
                 >
-                  ssh-warm-welcome
-                </Link>
+                  Nest
+                </Link>{" "}
+                or your own VPS
               </li>
+              <li>
+                contain a README with instructions on how to run the server and
+                client
+              </li>
+              <li>contain a JOURNAL.md file with a log of your work</li>
             </ul>
-          </div>
- <div
-            style={{
-              fontFamily: "monospace",
-              display: "flex",
-              flexDirection: "column",
-              gap: "1rem",
-            }}
-          >
-            <h1>what are the requirements?</h1>
             <p>
-              For your ssh app to be eligible, it must:
-              </p>
-              <ul
-                style={{
-                  fontFamily: "monospace",
-                  paddingLeft: "1rem",
-                  gap: "0.5rem",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <li>be open source</li>
-                <li>contain a README with instructions on how to run it</li>
-                <li>contain a JOURNAL.md file with a log of your work</li>
-              </ul>
+              Once your ssh app is ready, submit it by clicking the button at
+              the top!
+            </p>
           </div>
           <div
             style={{
@@ -299,6 +336,7 @@ export default function Home() {
           ))}
         </div>
       </footer>
+      <span className={styles.bottomText}>everybody say thank you fox</span>
     </div>
   );
 }
