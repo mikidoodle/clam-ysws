@@ -32,7 +32,7 @@
 .shellIntro {
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: 24px;
 }
 
 .asciiStage {
@@ -64,7 +64,9 @@
 }
 
 .introText {
-  min-width: 220px;
+  width: 310px;
+  min-width: 0;
+  flex: 0 0 310px;
 }
 
 .introText p {
@@ -76,6 +78,7 @@
   font-size: 32px;
   font-weight: 600;
   line-height: 1.15;
+  overflow-wrap: anywhere;
 }
 
 .asciiButton {
@@ -146,6 +149,7 @@
 
   .introText {
     width: 100%;
+    flex-basis: auto;
     text-align: center;
   }
 
