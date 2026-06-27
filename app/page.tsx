@@ -12,6 +12,7 @@ const asciiArray = [
   asciis.raspi,
   asciis.plushie,
   asciis.cloud,
+  asciis.custom
 ];
 const asciiText = [
   "stuff",
@@ -19,6 +20,7 @@ const asciiText = [
   "$15 in hardware (3 hours)",
   "a weighted clam plushie (5 hours)",
   "$10 in cloud credits (2 hours)",
+  "custom mihi-painted clam (7 hours)"
 ];
 const asciiStage = asciiArray.reduce(
   (stage, ascii) => {
